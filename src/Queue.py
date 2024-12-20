@@ -159,3 +159,87 @@ for i in range(1, 6):
 print("Dequeued:", queue.deQueue())
 queue.enQueue(6)
 print("Dequeued:", queue.deQueue())
+
+
+#Question 4
+
+from collections import deque
+
+def are_pairs_consecutive(stack):
+    queue = deque()
+    is_consecutive = True
+    
+    while stack:
+        queue.append(stack.pop())
+    
+    while len(queue) > 1:
+        first = queue.popleft()
+        second = queue.popleft()
+        
+        stack.append(first)
+        stack.append(second)
+        
+        if abs(first - second) != 1:
+            is_consecutive = False
+            break
+    
+    while queue:
+        stack.append(queue.popleft())
+    
+    while stack:
+        queue.append(stack.pop())
+    while queue:
+        stack.append(queue.popleft())
+    
+    return is_consecutive
+
+stack = [4, 5, -2, -3, 11, 10, 5, 6, 20]
+print("Stack:", stack)
+result = are_pairs_consecutive(stack)
+print("Pares consecutivos?", result)
+
+
+#Question 5
+
+def interleave_queue(queue):
+    n = len(queue)
+    stack = []
+    
+    for _ in range(n // 2):
+        stack.append(queue.popleft())
+    
+    while stack:
+        queue.append(stack.pop())
+        queue.append(queue.popleft())
+    
+    return queue
+
+
+queue = deque([11, 12, 13, 14, 15, 16])
+print("Original Queue:", list(queue))
+interleave_queue(queue)
+print("Interleaved Queue:", list(queue))
+
+
+#Question 6
+
+from collections import deque
+
+def interleave_queue_alternative(queue):
+    n = len(queue)
+    stack = []
+    
+    for _ in range(n // 2):
+        stack.append(queue.popleft())
+    
+    while stack:
+        queue.append(stack.pop())
+        queue.append(queue.popleft())
+    
+    return queue
+
+
+queue = deque([11, 12, 13, 14, 15, 16])
+print("Fila original:", list(queue))
+interleave_queue_alternative(queue)
+print("Fila intercalada:", list(queue))
